@@ -70,16 +70,23 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.all(20.0),
                 child: Row(
                   children: [
-                    Text(data[index].name, style: TextStyle(fontSize: 32.0)),
+                    Text(
+                      data[index].name,
+                      style: TextStyle(fontSize: 32.0)
+                    ),
                     Spacer(),
                     // 112
-                    Image.network(data[index].imageUrl),
+                    Image.network(data[index].imageUrl, width: 122,),
                   ],
                 ),
               ),
               onTap: () => Navigator.push(
                 context, MaterialPageRoute(
-                  builder: (ctx) => PokeDetailsView(url: data[index].url),
+                  builder: (ctx) => PokeDetailsView(
+                    url: data[index].url,
+                    name: data[index].name,
+                    imageUrl: data[index].imageUrl,
+                  ),
                 ),
               ),
             );
