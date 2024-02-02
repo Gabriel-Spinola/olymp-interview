@@ -57,7 +57,10 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
 
               Builder(builder: (context) {
                 if (widget.imageUrl != null) {
-                  return Text(widget.name!, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold));
+                  return Text(
+                      widget.name!,
+                      style: const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold)
+                  );
                 }
 
                 return FutureBuilder<PokemonModel>(
@@ -70,7 +73,10 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
                       }
 
                       if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
-                        return Text(snapshot.data!.name, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold));
+                        return Text(
+                            snapshot.data!.name,
+                            style: const TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold)
+                        );
                       }
 
                       return const CircularProgressIndicator();
