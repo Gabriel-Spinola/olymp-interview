@@ -24,24 +24,6 @@ class PokemonModel {
     required this.type,
   });
 
-  /*factory PokemonModel.fromJson(Map<String, dynamic> jsonData) {
-    return switch (jsonData) {
-      {
-        'id': int id,
-        'name': String name,
-        'height': int height,
-        'weight': int weight,
-      } => PokemonModel(
-        id: id,
-        name: name,
-        height: height,
-        weight: weight,
-        hability: '',
-      ),
-    _ => throw const FormatException("Failed to load avocado"),
-    };
-  }*/
-
   factory PokemonModel.fromJson(Map<String, dynamic> jsonData) {
     return PokemonModel(
       id: jsonData['id'],
