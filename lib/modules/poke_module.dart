@@ -49,25 +49,62 @@ class PokemonModel {
   }
 }
 
+class PokemonListModel {
+  final String name;
+  final String url;
+  final String imageUrl;
+
+  PokemonListModel({required this.imageUrl, required this.name, required this.url});
+
+  factory PokemonListModel.fromJson(Map<String, dynamic> jsonData) {
+    return PokemonListModel(
+      name: jsonData['name'].toString(),
+      url: jsonData['url'].toString(),
+      imageUrl: jsonData['imageUrl'],
+    );
+  }
+}
+
 class PokemonAPI {
   static const String _baseURL = 'https://pokeapi.co/api/v2/';
 
-  Future<List<PokemonModel>> getPokemonList() async {
+  Future<List<PokemonListModel>> getPokemonList() async {
     final response = await http.get(Uri.parse(_baseURL + 'pokemon/'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load avocado');
     }
 
-    List<PokemonModel> pokemons = List.empty(growable: true);
+    List<PokemonListModel> pokemons = List.empty(growable: true);
     dynamic decoded = jsonDecode(response.body);
 
     print(decoded);
 
-    for (Map<String, dynamic> data in decoded['data']) {
-      //avocados.add(Po.fromJson(data));
+    for (Map<String, dynamic> data in decoded['results']) {
+      var imageURL = await getImageFromNamedResource(data['url'].toString());
+      data.putIfAbsent('imageUrl', () => imageURL);
+
+      pokemons.add(PokemonListModel.fromJson(data));
     }
 
     return pokemons;
   }
+
+  Future<String> getImageFromNamedResource(String targetUrl) async {
+    final response = await http.get(Uri.parse(targetUrl));
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load avocado');
+    }
+
+    dynamic decoded = jsonDecode(response.body);
+
+    print(decoded);
+
+    return decoded['sprites']['front_default'];
+  }
+
+  /*Future<PokemonModel> getPokemonData() async {
+
+  }*/
 }

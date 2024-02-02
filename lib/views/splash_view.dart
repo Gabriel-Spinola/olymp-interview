@@ -19,7 +19,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   Future<Timer> _startTime() async {
-    var duration = const Duration(seconds: 3);
+    var duration = const Duration(seconds: 0);
     
     return Timer(
         duration,
