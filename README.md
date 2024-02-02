@@ -1,7 +1,5 @@
 # olymp
 
-Certamente, aqui está a versão revisada do texto:
-
 O aplicativo "Olymp" atendeu aos requisitos estipulados da seguinte forma:
  - Tela de abertura (Splash Screen).
  - Tela principal, apresentando uma lista de Pokémon.
