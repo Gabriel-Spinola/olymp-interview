@@ -34,7 +34,7 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
               // Title
               Builder(builder: (context) {
                   if (widget.imageUrl != null) {
-                    return Image.network(widget.imageUrl!, width: 124,);
+                    return Image.network(widget.imageUrl!, width: 164,);
                   }
 
                   return FutureBuilder<PokemonModel>(
@@ -57,7 +57,7 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
 
               Builder(builder: (context) {
                 if (widget.imageUrl != null) {
-                  return Text(widget.name!, style: TextStyle(fontSize: 32.0));
+                  return Text(widget.name!, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold));
                 }
 
                 return FutureBuilder<PokemonModel>(
@@ -70,7 +70,7 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
                       }
 
                       if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
-                        return Text(snapshot.data!.name, style: TextStyle(fontSize: 32.0));
+                        return Text(snapshot.data!.name, style: TextStyle(fontSize: 32.0, fontWeight: FontWeight.bold));
                       }
 
                       return const CircularProgressIndicator();
@@ -118,8 +118,8 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
       child: Column(
         children: [
           // Weight and Height
-          Text("Altura: " + data.height.toString()),
-          Text("Peso: " + data.weight.toString()),
+          Text("Altura: " + data.height.toString() + 'dm'),
+          Text("Peso: " + data.weight.toString() + 'hg'),
 
           SizedBox(height: 32.0),
 
