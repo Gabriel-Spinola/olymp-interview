@@ -75,7 +75,7 @@ class PokemonAPI {
   static const String baseURL = 'https://pokeapi.co/api/v2/';
 
   Future<List<PokemonListModel>> getPokemonList() async {
-    final response = await http.get(Uri.parse(baseURL + 'pokemon/'));
+    final response = await http.get(Uri.parse(baseURL + 'pokemon/?limit=60'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load avocado');
