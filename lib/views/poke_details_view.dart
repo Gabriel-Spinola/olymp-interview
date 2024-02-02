@@ -29,86 +29,94 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
     return Scaffold(
       body: SafeArea(
           // COnsider remove
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Title
-                  Image.network(widget.imageUrl, width: 124,),
-                  Text(widget.name),
-            
-                  // API DATA
-                  FutureBuilder<PokemonModel>(
-                      future: _pokemonData,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          print(snapshot.error);
-            
-                          return const Text("Houve um erro ao carregar seu pokemon ):");
-                        }
-            
-                        if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
-                          return _dataDisplay(snapshot.data!);
-                        }
+          child: Column(
+            children: [
+              // Title
+              Image.network(widget.imageUrl, width: 124,),
+              Text(widget.name, style: TextStyle(fontSize: 32.0)),
 
-                        return const CircularProgressIndicator();
-                      }
-                  ),
-            
-                  Spacer(),
-                  // Go Back
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Voltar!'),
-                  ),
-                  
-                  Spacer(),
-                ],
+              // API DATA
+              FutureBuilder<PokemonModel>(
+                  future: _pokemonData,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      print(snapshot.error);
+
+                      return const Text("Houve um erro ao carregar seu pokemon ):");
+                    }
+
+                    if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                      return _dataDisplay(snapshot.data!);
+                    }
+
+                    return const CircularProgressIndicator();
+                  }
               ),
-            ),
-          )
+
+              Spacer(),
+              // Go Back
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Voltar!'),
+              ),
+
+              Spacer(),
+            ],
+          ),
+      )
     );
   }
 
   Widget _dataDisplay(final PokemonModel data) {
-    return Column(
-      children: [
-        // Weight and Height
-        Text(data.height.toString()),
-        Text(data.weight.toString()),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // Weight and Height
+          Text("Altura: " + data.height.toString()),
+          Text("Peso: " + data.weight.toString()),
 
-        // Habilities
-        ListView.builder(
+          SizedBox(height: 32.0),
+
+          // Habilities
+          const Text("Habilidades", style: TextStyle(fontSize: 24.00)),
+          ListView.builder(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: data.habilities.length,
+              itemBuilder: (context, index) {
+                return Center(child: Text(data.habilities[index]));
+              },
+          ),
+
+          SizedBox(height: 32.0),
+
+          // Status
+          const Text("Status", style: TextStyle(fontSize: 24.0)),
+          ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
-            itemCount: data.habilities.length,
+            itemCount: data.stat.length,
             itemBuilder: (context, index) {
-              return Text(data.habilities[index]);
+              return Center(child: Text(data.stat[index]));
             },
-        ),
+          ),
 
-        // Status
-        ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: data.stat.length,
-          itemBuilder: (context, index) {
-            return Text(data.stat[index]);
-          },
-        ),
+          SizedBox(height: 32.0),
 
-        // Types
-        ListView.builder(
-          scrollDirection: Axis.vertical,
-          shrinkWrap: true,
-          itemCount: data.type.length,
-          itemBuilder: (context, index) {
-            return Text(data.type[index]);
-          },
-        ),
-      ],
+          // Types
+          const Text("Tipos", style: TextStyle(fontSize: 24.0)),
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: data.type.length,
+            itemBuilder: (context, index) {
+              return Center(child: Text(data.type[index]));
+            },
+          ),
+        ],
+      ),
     );
   }
 }

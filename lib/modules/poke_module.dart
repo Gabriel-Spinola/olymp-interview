@@ -121,11 +121,11 @@ class PokemonAPI {
     }
 
     for (Map<String, dynamic> data in decoded['stats']) {
-      types.add(data['stat']['name']);
+      habilities.add(data['stat']['name']);
     }
 
     for (Map<String, dynamic> data in decoded['abilities']) {
-      types.add(data['ability']['name']);
+      stats.add(data['ability']['name']);
     }
 
     var poke = PokemonModel(
