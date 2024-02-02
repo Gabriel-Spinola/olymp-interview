@@ -12,8 +12,6 @@ class PokemonModel {
 
   String? image;
 
-  //final List<AbilityModel> abilities;
-
   PokemonModel({
     required this.id,
     required this.name,
@@ -60,7 +58,7 @@ class PokemonAPI {
     final response = await http.get(Uri.parse(baseURL + 'pokemon/?limit=60'));
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to load avocado');
+      throw Exception('Failed to load pokemon list');
     }
 
     List<PokemonListModel> pokemons = List.empty(growable: true);
@@ -81,7 +79,7 @@ class PokemonAPI {
 
     if (response.statusCode != 200) {
       print(response.statusCode);
-      throw Exception('Failed to load avocado');
+      throw Exception('Failed to load image');
     }
 
     dynamic decoded = jsonDecode(response.body);
