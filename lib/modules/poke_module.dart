@@ -6,7 +6,7 @@ class PokemonModel {
   final String name;
   final int height;
   final int weight;
-  final List<String> habilities;
+  final List<String> abilities;
   final List<String> stat;
   final List<String> type;
 
@@ -17,7 +17,7 @@ class PokemonModel {
     required this.name,
     required this.height,
     required this.weight,
-    required this.habilities,
+    required this.abilities,
     required this.stat,
     required this.type,
   });
@@ -28,7 +28,7 @@ class PokemonModel {
       name: jsonData['name'],
       height: jsonData['height'],
       weight: jsonData['weight'],
-      habilities: jsonData['habilities'],
+      abilities: jsonData['habilities'],
       stat: jsonData['stat'],
       type: jsonData['type'],
     );
@@ -116,7 +116,7 @@ class PokemonAPI {
         name: decoded['name'],
         height: decoded['height'],
         weight: decoded['weight'],
-        habilities: habilities,
+        abilities: habilities,
         stat: stats,
         type: types
     );

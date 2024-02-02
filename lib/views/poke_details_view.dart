@@ -134,9 +134,9 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
           ListView.builder(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: data.habilities.length,
+              itemCount: data.abilities.length,
               itemBuilder: (context, index) {
-                return Center(child: Text(data.habilities[index]));
+                return Center(child: Text(data.abilities[index]));
               },
           ),
 

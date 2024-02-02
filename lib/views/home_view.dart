@@ -1,5 +1,6 @@
 import 'package:desktop/modules/poke_module.dart';
 import 'package:desktop/views/poke_details_view.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -42,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
                     trailing: [
                       MaterialButton(
                         onPressed: () {
-                          var targetUrl = PokemonAPI.baseURL + 'pokemon/' + controller.value.text + '/';
+                          var targetUrl = '${PokemonAPI.baseURL}pokemon/${controller.value.text}/';
 
                           Navigator.push(
                               context, MaterialPageRoute(
@@ -80,7 +81,9 @@ class _HomeViewState extends State<HomeView> {
                   future: _pokemonData,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
-                      print(snapshot.error);
+                      if (kDebugMode) {
+                        print(snapshot.error);
+                      }
 
                       return const Text("Houve um erro ao carregar seu pokemon ):");
                     }
@@ -118,9 +121,9 @@ class _HomeViewState extends State<HomeView> {
                   children: [
                     Text(
                       data[index].name,
-                      style: TextStyle(fontSize: 32.0)
+                      style: const TextStyle(fontSize: 32.0)
                     ),
-                    Spacer(),
+                    const Spacer(),
                     // 112
                     Image.network(data[index].imageUrl, width: 122,),
                   ],
