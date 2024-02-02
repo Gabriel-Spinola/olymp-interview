@@ -30,6 +30,52 @@ class _HomeViewState extends State<HomeView> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // Search bar
+              SearchAnchor(
+                builder: (BuildContext context, SearchController controller) {
+                  return SearchBar(
+                    controller: controller,
+                    padding: const MaterialStatePropertyAll<EdgeInsets>(
+                        EdgeInsets.symmetric(horizontal: 16.0)
+                    ),
+                    leading: const Icon(Icons.search),
+                    trailing: [
+                      MaterialButton(
+                        onPressed: () {
+                          var targetUrl = PokemonAPI.baseURL + 'pokemon/' + controller.value.text + '/';
+
+                          Navigator.push(
+                              context, MaterialPageRoute(
+                              builder: (ctx) => PokeDetailsView(
+                                url: targetUrl,
+                                name: null,
+                                imageUrl: null,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text("Procurar"),
+                      ),
+                    ],
+                  );
+                },
+                suggestionsBuilder: (BuildContext context, SearchController controller) {
+                  return List<ListTile>.generate(5, (int index) {
+                    final String item = 'item $index';
+
+                    return ListTile(
+                      title: Text(item),
+                      onTap: () {
+                        setState(() {
+                          controller.closeView(item);
+                        });
+                      },
+                    );
+                  });
+                },
+              ),
+
+              // List
               FutureBuilder<List<PokemonListModel>>(
                   future: _pokemonData,
                   builder: (context, snapshot) {

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../modules/poke_module.dart';
 
 class PokeDetailsView extends StatefulWidget {
-  final String name;
-  final String imageUrl;
+  final String? name;
+  final String? imageUrl;
   final String url;
 
   const PokeDetailsView({super.key, required this.url, required this.name, required this.imageUrl});
@@ -32,8 +32,52 @@ class _PokeDetailsViewState extends State<PokeDetailsView> {
           child: Column(
             children: [
               // Title
-              Image.network(widget.imageUrl, width: 124,),
-              Text(widget.name, style: TextStyle(fontSize: 32.0)),
+              Builder(builder: (context) {
+                  if (widget.imageUrl != null) {
+                    return Image.network(widget.imageUrl!, width: 124,);
+                  }
+
+                  return FutureBuilder<PokemonModel>(
+                      future: _pokemonData,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          print(snapshot.error);
+
+                          return const Text("Houve um erro ao carregar seu pokemon ):");
+                        }
+
+                        if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                          return Image.network(snapshot.data!.image!, width: 124,);
+                        }
+
+                        return const CircularProgressIndicator();
+                      }
+                  );
+              }),
+
+              Builder(builder: (context) {
+                if (widget.imageUrl != null) {
+                  return Text(widget.name!, style: TextStyle(fontSize: 32.0));
+                }
+
+                return FutureBuilder<PokemonModel>(
+                    future: _pokemonData,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+
+                        return const Text("Houve um erro ao carregar seu pokemon ):");
+                      }
+
+                      if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                        return Text(snapshot.data!.name, style: TextStyle(fontSize: 32.0));
+                      }
+
+                      return const CircularProgressIndicator();
+                    }
+                );
+              }),
+
 
               // API DATA
               FutureBuilder<PokemonModel>(

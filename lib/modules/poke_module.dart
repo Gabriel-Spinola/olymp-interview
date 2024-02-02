@@ -10,6 +10,8 @@ class PokemonModel {
   final List<String> stat;
   final List<String> type;
 
+  String? image;
+
   //final List<AbilityModel> abilities;
 
   PokemonModel({
@@ -70,10 +72,10 @@ class PokemonListModel {
 }
 
 class PokemonAPI {
-  static const String _baseURL = 'https://pokeapi.co/api/v2/';
+  static const String baseURL = 'https://pokeapi.co/api/v2/';
 
   Future<List<PokemonListModel>> getPokemonList() async {
-    final response = await http.get(Uri.parse(_baseURL + 'pokemon/'));
+    final response = await http.get(Uri.parse(baseURL + 'pokemon/'));
 
     if (response.statusCode != 200) {
       throw Exception('Failed to load avocado');
@@ -96,6 +98,7 @@ class PokemonAPI {
     final response = await http.get(Uri.parse(targetUrl));
 
     if (response.statusCode != 200) {
+      print(response.statusCode);
       throw Exception('Failed to load avocado');
     }
 
@@ -108,7 +111,7 @@ class PokemonAPI {
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode != 200) {
-      throw Exception('Failed to load avocado');
+      throw Exception('Failed to load pokemon data');
     }
 
     dynamic decoded = jsonDecode(response.body);
@@ -137,6 +140,8 @@ class PokemonAPI {
         stat: stats,
         type: types
     );
+
+    poke.image = decoded['sprites']['front_default'];
 
     return poke;
   }
